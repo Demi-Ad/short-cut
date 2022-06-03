@@ -24,19 +24,22 @@ public class RedirectUrl {
 
     private String convertUrl;
 
+    private String documentTitle;
+
     @CreatedDate
     private LocalDateTime createdDateTime;
 
     private String urlMakeIpAddress;
 
     @Builder
-    public RedirectUrl(String originUrl, String convertUrl, String urlMakeIpAddress) {
+    public RedirectUrl(String originUrl, String convertUrl, String urlMakeIpAddress, String documentTitle) {
         this.originUrl = originUrl;
         this.convertUrl = convertUrl;
         this.urlMakeIpAddress = urlMakeIpAddress;
+        this.documentTitle = documentTitle;
     }
 
     public RedirectUrlDto toDto() {
-        return new RedirectUrlDto(id,originUrl,convertUrl);
+        return new RedirectUrlDto(id,originUrl,convertUrl,documentTitle);
     }
 }

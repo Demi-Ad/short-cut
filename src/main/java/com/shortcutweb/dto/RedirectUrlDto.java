@@ -14,5 +14,5 @@ public class RedirectUrlDto {
     @URL(message = "URL 형식이 올바르지 않습니다")
     private String originUrl;
     private String convertUrl;
-
+    private String documentTitle;
 }

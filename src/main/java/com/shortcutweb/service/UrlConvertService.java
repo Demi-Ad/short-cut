@@ -15,14 +15,12 @@ import org.springframework.transaction.annotation.Transactional;
 public class UrlConvertService {
     private final RedirectUrlRepository repository;
     private final GenerateRandomUrl generateRandomUrl;
-    private final UrlConnectionCheckService connectionCheckService;
 
     public RedirectUrlDto save(RedirectUrlDto dto, String clientIp) {
-        connectionCheckService.connect(dto.getOriginUrl());
-
         String convertUrl = makeConvertUrl();
 
         RedirectUrl redirectUrl = RedirectUrl.builder()
+                .documentTitle(dto.getDocumentTitle())
                 .originUrl(dto.getOriginUrl())
                 .urlMakeIpAddress(clientIp)
                 .convertUrl(convertUrl)

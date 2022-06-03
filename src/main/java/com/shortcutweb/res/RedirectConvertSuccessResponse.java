@@ -9,5 +9,5 @@ import lombok.Getter;
 public class RedirectConvertSuccessResponse {
     private String originUrl;
     private String convertUrl;
-
+    private String documentTitle;
 }
