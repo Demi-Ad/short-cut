@@ -1,0 +1,21 @@
+spring:
+    profiles:
+        active: dev
+
+
+---
+spring:
+    config:
+        activate:
+            on-profile: dev
+    jpa:
+        hibernate:
+            ddl-auto: create
+        show-sql: true
+        open-in-view: off
+        properties:
+            hibernate:
+                format_sql: true
+                default_batch_fetch_size: 1000
+server:
+    port: 9090
