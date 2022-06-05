@@ -1,7 +1,7 @@
 package com.shortcutweb.config;
 
 import com.shortcutweb.config.ipresolver.IpResolver;
-import com.shortcutweb.config.messageresolver.RequestInfoResolver;
+import com.shortcutweb.config.redirectresolver.RequestInfoResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;

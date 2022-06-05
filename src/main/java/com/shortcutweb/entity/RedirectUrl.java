@@ -20,8 +20,10 @@ public class RedirectUrl {
     private Long id;
 
     @Lob
+    @Column(nullable = false,updatable = false)
     private String originUrl;
 
+    @Column(unique = true, length = 6,updatable = false,nullable = false)
     private String convertUrl;
 
     private String documentTitle;

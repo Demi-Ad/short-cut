@@ -1,4 +1,4 @@
-package com.shortcutweb.message;
+package com.shortcutweb.event;
 
 public enum UserAgent {
     OS,DEVICE,BROWSER

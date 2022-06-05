@@ -1,24 +1,24 @@
-package com.shortcutweb.message;
+package com.shortcutweb.event;
 
 import lombok.*;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 @Builder
 @ToString
-public class RedirectMessage {
-
+public class RedirectEvent {
+    private String requestURI;
     private String referer;
     private String clientOS;
     private String clientDevice;
     private String clientBrowser;
     private String clientIP;
-    private LocalDateTime redirectDateTime;
+    private LocalDate redirectDate;
 
-    public static RedirectMessage empty() {
-        return new RedirectMessage();
+    public static RedirectEvent empty() {
+        return new RedirectEvent();
     }
 }

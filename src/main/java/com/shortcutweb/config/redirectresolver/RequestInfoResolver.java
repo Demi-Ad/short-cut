@@ -1,9 +1,10 @@
-package com.shortcutweb.config.messageresolver;
+package com.shortcutweb.config.redirectresolver;
 
 import com.shortcutweb.component.UserAgentParser;
-import com.shortcutweb.message.RedirectMessage;
-import com.shortcutweb.message.UserAgent;
+import com.shortcutweb.event.RedirectEvent;
+import com.shortcutweb.event.UserAgent;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -12,13 +13,14 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.Map;
 import java.util.Objects;
 import java.util.stream.Stream;
 
 @Component
 @RequiredArgsConstructor
+@Slf4j
 public class RequestInfoResolver implements HandlerMethodArgumentResolver {
 
     private final UserAgentParser userAgentParser;
@@ -26,7 +28,7 @@ public class RequestInfoResolver implements HandlerMethodArgumentResolver {
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
         return parameter.getParameterAnnotation(RequestInfo.class) != null &&
-                parameter.getParameterType().equals(RedirectMessage.class);
+                parameter.getParameterType().equals(RedirectEvent.class);
     }
 
     @Override
@@ -41,18 +43,20 @@ public class RequestInfoResolver implements HandlerMethodArgumentResolver {
                     .orElse("");
 
             String ua = req.getHeader("user-agent");
-
+            String requestURI = req.getRequestURI().replace("/","");
+            log.info("URI = {}",requestURI);
             Map<UserAgent, String> userAgentParseMap = userAgentParser.parse(ua);
 
-            return RedirectMessage.builder()
+            return RedirectEvent.builder()
+                    .requestURI(requestURI)
                     .referer(referer)
                     .clientIP(ipAddress)
                     .clientOS(userAgentParseMap.get(UserAgent.OS))
                     .clientDevice(userAgentParseMap.get(UserAgent.DEVICE))
                     .clientBrowser(userAgentParseMap.get(UserAgent.BROWSER))
-                    .redirectDateTime(LocalDateTime.now())
+                    .redirectDate(LocalDate.now())
                     .build();
         }
-        return RedirectMessage.empty();
+        return RedirectEvent.empty();
     }
 }

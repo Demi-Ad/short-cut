@@ -31,9 +31,11 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.amqp:spring-rabbit-test'
+    implementation 'mysql:mysql-connector-java'
 
-    implementation 'com.github.ua-parser:uap-java:1.4.8'
+    implementation 'com.github.ua-parser:uap-java:1.5.2'
     implementation 'org.jsoup:jsoup:1.14.3'
+    implementation 'com.maxmind.geoip2:geoip2:3.0.1'
 }
 
 tasks.named('test') {

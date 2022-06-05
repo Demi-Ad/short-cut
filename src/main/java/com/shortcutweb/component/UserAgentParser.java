@@ -1,7 +1,6 @@
 package com.shortcutweb.component;
 
-import com.shortcutweb.message.RedirectMessage;
-import com.shortcutweb.message.UserAgent;
+import com.shortcutweb.event.UserAgent;
 import org.springframework.stereotype.Component;
 import ua_parser.Client;
 import ua_parser.Parser;
