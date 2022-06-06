@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
+@Table(indexes = {@Index(name = "i_convert_url",columnList = "convertUrl")})
 public class RedirectUrl {
 
     @Id

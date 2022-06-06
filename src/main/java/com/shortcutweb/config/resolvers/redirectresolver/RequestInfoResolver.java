@@ -1,12 +1,14 @@
-package com.shortcutweb.config.redirectresolver;
+package com.shortcutweb.config.resolvers.redirectresolver;
 
 import com.shortcutweb.component.UserAgentParser;
+import com.shortcutweb.config.resolvers.Resolve;
 import com.shortcutweb.event.RedirectEvent;
 import com.shortcutweb.event.UserAgent;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -27,7 +29,7 @@ public class RequestInfoResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.getParameterAnnotation(RequestInfo.class) != null &&
+        return parameter.getParameterAnnotation(Resolve.class) != null &&
                 parameter.getParameterType().equals(RedirectEvent.class);
     }
 
@@ -36,7 +38,9 @@ public class RequestInfoResolver implements HandlerMethodArgumentResolver {
         HttpServletRequest req = webRequest.getNativeRequest(HttpServletRequest.class);
         if (req != null) {
             String referer = req.getHeader("referer");
-
+            if (!StringUtils.hasText(referer)) {
+                referer = "empty";
+            }
             String ipAddress = Stream.of(req.getRemoteAddr(), req.getHeader("X-FORWARDED-FOR"))
                     .filter(Objects::nonNull)
                     .findFirst()
@@ -44,7 +48,6 @@ public class RequestInfoResolver implements HandlerMethodArgumentResolver {
 
             String ua = req.getHeader("user-agent");
             String requestURI = req.getRequestURI().replace("/","");
-            log.info("URI = {}",requestURI);
             Map<UserAgent, String> userAgentParseMap = userAgentParser.parse(ua);
 
             return RedirectEvent.builder()

@@ -8,7 +8,6 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication
 @EnableCaching
-@EnableAsync
 @EnableJpaAuditing
 public class ShortCutWebApplication {
 

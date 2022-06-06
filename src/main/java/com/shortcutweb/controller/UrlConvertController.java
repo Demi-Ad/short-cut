@@ -1,21 +1,21 @@
 package com.shortcutweb.controller;
 
-import com.shortcutweb.config.ipresolver.IpResolve;
+import com.shortcutweb.config.resolvers.Resolve;
 import com.shortcutweb.dto.RedirectUrlDto;
 import com.shortcutweb.res.RedirectConvertSuccessResponse;
 import com.shortcutweb.service.UrlConnectionCheckService;
 import com.shortcutweb.service.UrlConvertService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.boot.web.server.Cookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @RestController
+@Transactional
 @RequiredArgsConstructor
 public class UrlConvertController {
 
@@ -24,7 +24,7 @@ public class UrlConvertController {
 
 
     @PostMapping(value = "/convert",produces = "application/json")
-    public ResponseEntity<RedirectConvertSuccessResponse> convert(@IpResolve String ip, @Valid @RequestBody RedirectUrlDto redirectUrlDto, HttpServletResponse response) {
+    public ResponseEntity<RedirectConvertSuccessResponse> convert(@Resolve String ip, @Valid @RequestBody RedirectUrlDto redirectUrlDto) {
 
         String title = connectionCheckService.connect(redirectUrlDto.getOriginUrl());
         redirectUrlDto.setDocumentTitle(title);

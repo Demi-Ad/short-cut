@@ -1,5 +1,6 @@
-package com.shortcutweb.config.ipresolver;
+package com.shortcutweb.config.resolvers.ipresolver;
 
+import com.shortcutweb.config.resolvers.Resolve;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -14,7 +15,7 @@ public class IpResolver implements HandlerMethodArgumentResolver {
 
     @Override
     public boolean supportsParameter(MethodParameter parameter) {
-        return parameter.getParameterAnnotation(IpResolve.class) != null &&
+        return parameter.getParameterAnnotation(Resolve.class) != null &&
                 parameter.getParameterType().equals(String.class);
     }
 

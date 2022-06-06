@@ -1,7 +1,8 @@
 package com.shortcutweb.config;
 
-import com.shortcutweb.config.ipresolver.IpResolver;
-import com.shortcutweb.config.redirectresolver.RequestInfoResolver;
+import com.shortcutweb.config.resolvers.ipresolver.IpResolver;
+import com.shortcutweb.config.resolvers.redirectresolver.RequestInfoResolver;
+import com.shortcutweb.config.resolvers.statisticsresolver.StatisticsQueryResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
@@ -19,5 +20,6 @@ public class MvcConfig implements WebMvcConfigurer {
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
         resolvers.add(new IpResolver());
         resolvers.add(requestInfoResolver);
+        resolvers.add(new StatisticsQueryResolver());
     }
 }

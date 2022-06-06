@@ -11,14 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.event.EventListener;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.transaction.event.TransactionPhase;
-import org.springframework.transaction.event.TransactionalEventListener;
 
 import java.io.IOException;
-import java.util.NoSuchElementException;
 
 @Component
 @RequiredArgsConstructor
@@ -33,7 +27,6 @@ public class RedirectEventListener {
     @EventListener(classes = {RedirectEvent.class})
     public void subscription(RedirectEvent event) {
         RedirectUrl redirectUrl = urlRepository.findByConvertUrlEquals(event.getRequestURI()).orElseThrow();
-        log.info("TEST = {}",redirectUrl);
         String country;
         try {
             country = geoLiteComponent.country(event.getClientIP());

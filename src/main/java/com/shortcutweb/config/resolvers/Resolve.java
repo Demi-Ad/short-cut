@@ -1,4 +1,4 @@
-package com.shortcutweb.config.redirectresolver;
+package com.shortcutweb.config.resolvers;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,5 +7,8 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.PARAMETER)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface RequestInfo {
+/*
+ * Argument Resolver Mark Annotation
+ */
+public @interface Resolve {
 }

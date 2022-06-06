@@ -1,6 +1,6 @@
 package com.shortcutweb.controller;
 
-import com.shortcutweb.config.redirectresolver.RequestInfo;
+import com.shortcutweb.config.resolvers.Resolve;
 import com.shortcutweb.exception.UrlNotFoundException;
 import com.shortcutweb.event.RedirectEvent;
 import com.shortcutweb.service.UrlRedirectService;
@@ -20,7 +20,7 @@ public class UrlRedirectController {
     private final ApplicationEventPublisher eventPublisher;
 
     @GetMapping("/{param:^[a-zA-Z0-9]{6}$}")
-    public String redirect(@PathVariable("param") String param, @RequestInfo RedirectEvent redirectEvent) {
+    public String redirect(@PathVariable("param") String param, @Resolve RedirectEvent redirectEvent) {
         try {
             String originUrl = redirectService.findOriginUrl(param);
             eventPublisher.publishEvent(redirectEvent);
