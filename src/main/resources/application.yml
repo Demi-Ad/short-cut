@@ -10,9 +10,10 @@ spring:
                 default_batch_fetch_size: 1000
     profiles:
         active: mysql
+domain:
+    url: http://127.0.0.1
 server:
-    port: 9090
-
+    port: 80
 
 
 ---

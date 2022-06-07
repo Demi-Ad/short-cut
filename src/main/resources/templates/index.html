@@ -24,6 +24,9 @@
             background-size: cover;
             background-position: center;
         }
+        .copy-btn {
+            cursor: pointer;
+        }
 
     </style>
 </head>
@@ -33,6 +36,7 @@
             <div class="container pb-5">
                 <div class="row py-5 align-items-center">
                     <div class="col-lg-6">
+                        <h1 class="text-white">Url Shortest</h1>
                         <p class="text-white fs-1">
                             Here you have full control over your links.
                         </p>
@@ -83,10 +87,13 @@
             </div>
         </div>
 
-        <div class="container mt-5 mb-3" id="short-area">
+        <div class="container mt-5 mb-5" id="short-area">
             <div class="input-group">
                 <input class="form-control rounded-3 typed" type="url" id="url-input">
-                <button class="btn btn-outline-primary rounded-3" id="short-btn">Shorten</button>
+                <button class="btn btn-outline-primary rounded-3" id="short-btn">
+                    Shorten
+                    <span class="spinner-border spinner-border-sm" hidden></span>
+                </button>
             </div>
         </div>
 
@@ -122,8 +129,8 @@
             </section>
         </div>
 
-        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
-            © 2020 Copyright:
+        <div class="text-center" style="background-color: rgba(0, 0, 0, 0.2);">
+            © 2022 Copyright:
             <a class="text-white" href="">...</a>
         </div>
 
@@ -135,16 +142,43 @@
     <script src="http://code.jquery.com/jquery-3.3.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
     <script>
 
-        function resultDraw(item) {
-            // ITEM(localStorage) : [{...}]
-            //TODO : CARD FORM
+        function copyBtn(url) {
+            navigator.clipboard.writeText(url)
+            toastr.info("ClipBoard Copy It!")
         }
 
-        window.onstorage = function (e) {
-            console.log(e)
+        function resultDraw() {
+            // ITEM(localStorage) : [{...}]
+            //TODO : CARD FORM
+            let parse = JSON.parse(localStorage.getItem("site"));
+            const divElem = document.querySelector("#result");
+            divElem.innerHTML = parse.map(json => {
+                const {convertUrl, documentTitle, originUrl} = json
+                return `<div class="col-12 mb-3 border-start border-primary border-2">
+                                <div class="card">
+                                      <div class="card-body">
+                                            <div class="d-flex justify-content-between">
+                                                <p class="text-truncate">${documentTitle}</p>
+                                                <p class="text-truncate">
+                                                    <a href="${originUrl}">${originUrl}</a>
+                                                </p>
+                                            </div>
+                                            <hr/>
+                                            <div class="d-flex justify-content-between">
+                                                <p class="text-danger">
+                                                    ${convertUrl}<i class="fa-solid fa-copy copy-btn ms-3" onclick="copyBtn('${convertUrl}')"></i>
+                                                </p>
+                                                <a href="${convertUrl}-stat" class="">Show Analysis</a>
+                                            </div>
+                                      </div>
+                                </div>
+                        </div>`
+            }).join("")
         }
+
         window.addEventListener("load", function () {
             let type = new Typed(".typed", {
                 attr: "placeholder",
@@ -157,8 +191,7 @@
             if (!localStorage.getItem("site")) {
                 localStorage.setItem("site",JSON.stringify([]))
             }
-
-
+            resultDraw()
 
             document.querySelector("#short-btn").addEventListener("click",() => {
                 let urlElem = document.querySelector("#url-input");
@@ -166,11 +199,8 @@
                 const urlRegex = /(http|https):\/\/(\w+:?\w*@)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%@\-\/]))?/
 
                 if (!urlRegex.test(originUrl)) {
-                    originUrl = "http://" + originUrl
-                    if (!urlRegex.test(originUrl)) {
-                        alert("올바르지 못한 URL")
-                        return
-                    }
+                    toastr.error("URL Check")
+                    return
                 }
 
                 fetch("/convert",{
@@ -183,7 +213,7 @@
                     if (res.status === 200) {
                         return res.json();
                     } else {
-                        toastr.error("error")
+                        throw new Error()
                     }
                 }).then(json => {
                     const parse = JSON.parse(localStorage.getItem("site"));
@@ -191,12 +221,14 @@
                     localStorage.setItem("site",JSON.stringify(parse))
                     urlElem.value = ""
                     toastr.success("success! convert complete")
+                    resultDraw()
                 }).catch(err => {
                     console.log(err)
-                    toastr.error("Convert Fail")
+                    toastr.error("Convert Fail" + err)
                 })
             })
         })
+
     </script>
 </body>
 </html>

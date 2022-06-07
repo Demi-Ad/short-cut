@@ -6,6 +6,8 @@ import com.shortcutweb.res.RedirectConvertSuccessResponse;
 import com.shortcutweb.service.UrlConnectionCheckService;
 import com.shortcutweb.service.UrlConvertService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,6 +23,7 @@ public class UrlConvertController {
 
     private final UrlConvertService urlConvertService;
     private final UrlConnectionCheckService connectionCheckService;
+    private final Environment env;
 
 
     @PostMapping(value = "/convert",produces = "application/json")
@@ -30,7 +33,8 @@ public class UrlConvertController {
         redirectUrlDto.setDocumentTitle(title);
 
         RedirectUrlDto save = urlConvertService.save(redirectUrlDto, ip);
-        RedirectConvertSuccessResponse redirectConvertSuccessResponse = new RedirectConvertSuccessResponse(save.getOriginUrl(), save.getConvertUrl(),save.getDocumentTitle());
+        String domain = env.getProperty("domain.url");
+        RedirectConvertSuccessResponse redirectConvertSuccessResponse = new RedirectConvertSuccessResponse(save.getOriginUrl(), domain + "/" + save.getConvertUrl(),save.getDocumentTitle());
         return ResponseEntity.ok(redirectConvertSuccessResponse);
     }
 }
