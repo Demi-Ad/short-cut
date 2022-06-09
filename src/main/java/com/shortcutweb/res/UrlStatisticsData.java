@@ -10,10 +10,10 @@ import java.util.Map;
 @AllArgsConstructor
 @Builder
 public class UrlStatisticsData {
-    private Map<String,Long> refererCount;
-    private Map<String,Long> browserCount;
-    private Map<String,Long> osCount;
-    private Map<String,Long> deviceCount;
-    private Map<String,Long> dateCount;
-    private Map<String,Long> countryCount;
+    private Map<String,Long> referer;
+    private Map<String,Long> browser;
+    private Map<String,Long> os;
+    private Map<String,Long> device;
+    private Map<String,Long> date;
+    private Map<String,Long> country;
 }

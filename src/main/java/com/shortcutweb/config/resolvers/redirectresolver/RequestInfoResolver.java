@@ -39,7 +39,7 @@ public class RequestInfoResolver implements HandlerMethodArgumentResolver {
         if (req != null) {
             String referer = req.getHeader("referer");
             if (!StringUtils.hasText(referer)) {
-                referer = "empty";
+                referer = "direct";
             }
             String ipAddress = Stream.of(req.getRemoteAddr(), req.getHeader("X-FORWARDED-FOR"))
                     .filter(Objects::nonNull)

@@ -19,7 +19,7 @@ public class UrlRedirectController {
     private final UrlRedirectService redirectService;
     private final ApplicationEventPublisher eventPublisher;
 
-    @GetMapping("/{param:^[a-zA-Z0-9]{6}$}")
+    @GetMapping(value = "/{param:^[a-zA-Z0-9]{6}$}")
     public String redirect(@PathVariable("param") String param, @Resolve RedirectEvent redirectEvent) {
         try {
             String originUrl = redirectService.findOriginUrl(param);

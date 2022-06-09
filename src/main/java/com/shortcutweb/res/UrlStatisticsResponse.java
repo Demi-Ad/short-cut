@@ -11,5 +11,7 @@ import java.util.Map;
 @Builder
 public class UrlStatisticsResponse {
     private Long hitCount;
+    private String originUrl;
+    private String documentTitle;
     private UrlStatisticsData data;
 }

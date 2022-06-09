@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -21,9 +22,10 @@ public class UrlStatisticsController {
 
     @GetMapping(value = "/{param:^[a-zA-Z0-9]{6}-stat$}",produces = "text/html")
     public String getUrlStatistics(@PathVariable String param,
-                                   @Resolve StatisticsQuery query) {
+                                   @Resolve StatisticsQuery query, Model model) {
         String uri = param.replace("-stat", "");
         UrlStatisticsResponse statistics = statisticsService.Statistics(uri, query);
-        return "page/statisticsPage";
+        model.addAttribute("statistics",statistics);
+        return "page/dash";
     }
 }
