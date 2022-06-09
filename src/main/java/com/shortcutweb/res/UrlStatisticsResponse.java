@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 
+import java.time.LocalDate;
 import java.util.Map;
 
 @Data
@@ -14,4 +15,6 @@ public class UrlStatisticsResponse {
     private String originUrl;
     private String documentTitle;
     private UrlStatisticsData data;
+    private LocalDate startDate;
+    private LocalDate endDate;
 }

@@ -26,6 +26,7 @@ public class UrlStatisticsController {
         String uri = param.replace("-stat", "");
         UrlStatisticsResponse statistics = statisticsService.Statistics(uri, query);
         model.addAttribute("statistics",statistics);
+        model.addAttribute("uri",uri);
         return "page/dash";
     }
 }

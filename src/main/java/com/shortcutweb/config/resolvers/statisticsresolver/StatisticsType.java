@@ -3,7 +3,7 @@ package com.shortcutweb.config.resolvers.statisticsresolver;
 import java.util.Arrays;
 
 public enum StatisticsType {
-    CURRENT,BETWEEN,SINGLE;
+    CURRENT,BETWEEN;
 
     public static StatisticsType of(String type) {
         return Arrays.stream(StatisticsType.values())

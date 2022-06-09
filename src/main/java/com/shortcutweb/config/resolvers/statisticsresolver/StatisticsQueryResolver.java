@@ -28,16 +28,9 @@ public class StatisticsQueryResolver implements HandlerMethodArgumentResolver {
         StatisticsType type = StatisticsType.of(typeParam);
         StatisticsQuery.StatisticsQueryBuilder builder = StatisticsQuery.builder().type(type);
         try {
-            switch (type) {
-                case SINGLE:
-                    builder.singleDate(LocalDate.parse(request.getParameter("single")));
-                    break;
-                case BETWEEN:
-                    builder.startDate(LocalDate.parse(request.getParameter("start")))
-                            .endDate(LocalDate.parse(request.getParameter("end")));
-                    break;
-                case CURRENT:
-                    break;
+            if (type == StatisticsType.BETWEEN) {
+                builder.startDate(LocalDate.parse(request.getParameter("start")))
+                        .endDate(LocalDate.parse(request.getParameter("end")));
             }
             return builder.build();
         } catch (DateTimeParseException e) {

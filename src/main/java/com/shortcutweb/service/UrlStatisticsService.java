@@ -31,18 +31,22 @@ public class UrlStatisticsService {
 
     public UrlStatisticsResponse Statistics(String param, StatisticsQuery query) {
         RedirectUrl redirectUrl = urlRepository.findByConvertUrlEquals(param).orElseThrow(UrlNotFoundException::new);
-
+        LocalDate startDate;
+        LocalDate endDate;
         List<RedirectInformation> list = new ArrayList<>();
         switch (query.getType()) {
-            case SINGLE:
-                list.addAll(informationRepository.searchByConvertUrl(redirectUrl,query.getSingleDate()));
-                break;
             case BETWEEN:
-                list.addAll(informationRepository.searchByConvertUrl(redirectUrl,query.getStartDate(),query.getEndDate()));
+                startDate = query.getStartDate();
+                endDate = query.getEndDate();
+                list.addAll(informationRepository.searchByConvertUrl(redirectUrl,startDate,endDate));
                 break;
             case CURRENT:
-                list.addAll(informationRepository.searchByConvertUrl(redirectUrl,LocalDate.now().minusMonths(1L) ,LocalDate.now()));
+                startDate = LocalDate.now().minusMonths(1L);
+                endDate = LocalDate.now();
+                list.addAll(informationRepository.searchByConvertUrl(redirectUrl,startDate ,endDate));
                 break;
+            default:
+                throw new RuntimeException();
         }
 
 
@@ -61,6 +65,8 @@ public class UrlStatisticsService {
                 .documentTitle(redirectUrl.getDocumentTitle())
                 .originUrl(redirectUrl.getOriginUrl())
                 .data(statisticsData)
+                .startDate(startDate)
+                .endDate(endDate)
                 .build();
 
     }

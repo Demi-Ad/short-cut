@@ -18,7 +18,7 @@
 		}
 
 		.navbar{
-			background-color: rgba(54, 66, 89, 0);
+			background-color: rgba(12, 30, 75, 0.85);
 		}
 
 
@@ -92,12 +92,17 @@
 							<div class="w-100">
 								<div class="card">
 									<div class="card-header">
-										<h5 class="card-title mb-0" th:text="${statistics.documentTitle}">${title}</h5>
-										<span class="ms-3">${date ~ date} </span>
+										<h5 class="card-title mb-0">
+											[[${statistics.documentTitle}]]
+											<span class="ms-3" th:text="${statistics.startDate}"></span>
+											~
+											<span th:text="${statistics.endDate}"></span>
+										</h5>
+
 									</div>
 									<div class="card-body">
 										<p class="card-text">
-											${convertUrl}
+											[[${uri}]]
 											<i class="fa-solid fa-computer-mouse me-2"></i>
 											<span th:text="${statistics.hitCount}"></span>
 											Click!
