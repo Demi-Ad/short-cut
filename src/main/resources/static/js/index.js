@@ -8,18 +8,17 @@ function cardHtmlCreate(json) {
     return `<div class="col-12 mb-3 border-start border-primary border-2">
                                 <div class="card">
                                       <div class="card-body">
-                                            <div class="d-flex justify-content-between">
+                                            <div class="d-flex">
                                                 <p class="text-truncate mb-0 fs-5">
                                                     <a class="text-decoration-none align-middle" href="${originUrl}">${documentTitle}</a>
                                                 </p>
-                                                <p class="text-truncate mb-0 mt-0 border border-secondary rounded-1 fs-6 p-1">${createDate}</p>
                                             </div>
                                             <hr/>
                                             <div class="d-flex justify-content-between">
                                                 <p class="text-danger mb-0">
                                                     ${convertUrl}<i class="fa-solid fa-copy copy-btn ms-3" onclick="copyBtn('${convertUrl}')"></i>
                                                 </p>
-                                                <a href="${convertUrl}-stat" class="">Show Analysis</a>
+                                                <a href="${convertUrl}-stat" class="">Analysis</a>
                                             </div>
                                       </div>
                                 </div>

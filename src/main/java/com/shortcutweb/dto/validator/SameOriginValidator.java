@@ -1,12 +1,10 @@
 package com.shortcutweb.dto.validator;
 
-import com.shortcutweb.dto.RedirectUrlDto;
+import com.shortcutweb.dto.ConvertRequestDto;
 import com.shortcutweb.exception.UrlConvertException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import org.springframework.validation.Errors;
-import org.springframework.validation.Validator;
 
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -25,7 +23,7 @@ public class SameOriginValidator {
         }
     }
 
-    public void validate(RedirectUrlDto dto) {
+    public void validate(ConvertRequestDto dto) {
         String originUrl = dto.getOriginUrl();
         try {
             URI uri = new URI(originUrl);
@@ -33,7 +31,7 @@ public class SameOriginValidator {
                 throw new UrlConvertException("Same Origin Domain");
             }
         } catch (URISyntaxException e) {
-            throw new UrlConvertException(e.getMessage());
+            throw new UrlConvertException("URI Convert Fail");
         }
 
     }

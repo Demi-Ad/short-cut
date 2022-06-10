@@ -1,0 +1,10 @@
+err-01 : Not Validate URL Pattern
+
+err-02 : Request is Not Successfully
+
+err-03 : Request don't Readable
+
+err-10 : URL NOT FOUND
+
+err-11 : Query Parameter Not Accepted
+

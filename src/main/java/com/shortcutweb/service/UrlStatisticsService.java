@@ -36,8 +36,8 @@ public class UrlStatisticsService {
         List<RedirectInformation> list = new ArrayList<>();
         switch (query.getType()) {
             case BETWEEN:
-                startDate = query.getStartDate();
-                endDate = query.getEndDate();
+                startDate = query.getStart();
+                endDate = query.getEnd();
                 list.addAll(informationRepository.searchByConvertUrl(redirectUrl,startDate,endDate));
                 break;
             case CURRENT:

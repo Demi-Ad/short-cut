@@ -44,7 +44,7 @@ public class RequestInfoResolver implements HandlerMethodArgumentResolver {
             String ipAddress = Stream.of(req.getRemoteAddr(), req.getHeader("X-FORWARDED-FOR"))
                     .filter(Objects::nonNull)
                     .findFirst()
-                    .orElse("");
+                    .orElse("NOT_FOUND");
 
             String ua = req.getHeader("user-agent");
             String requestURI = req.getRequestURI().replace("/","");

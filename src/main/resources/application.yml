@@ -14,7 +14,12 @@ domain:
     url: http://127.0.0.1
 server:
     port: 80
-
+springdoc:
+    api-docs:
+        path: /api-doc
+    swagger-ui:
+        path: /swagger-ui
+        disable-swagger-default-url: true
 
 ---
 spring:

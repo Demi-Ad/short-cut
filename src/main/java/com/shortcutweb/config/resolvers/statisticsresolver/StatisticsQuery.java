@@ -11,7 +11,6 @@ import java.time.LocalDate;
 @Builder
 public class StatisticsQuery {
     private StatisticsType type;
-    private LocalDate singleDate;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private LocalDate start;
+    private LocalDate end;
 }

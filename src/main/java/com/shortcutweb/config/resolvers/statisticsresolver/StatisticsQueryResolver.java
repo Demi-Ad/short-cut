@@ -1,6 +1,7 @@
 package com.shortcutweb.config.resolvers.statisticsresolver;
 
 import com.shortcutweb.config.resolvers.Resolve;
+import com.shortcutweb.exception.QueryParameterException;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
 import org.springframework.web.context.request.NativeWebRequest;
@@ -8,7 +9,6 @@ import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 
 import javax.servlet.http.HttpServletRequest;
-import java.time.DateTimeException;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 
@@ -29,12 +29,12 @@ public class StatisticsQueryResolver implements HandlerMethodArgumentResolver {
         StatisticsQuery.StatisticsQueryBuilder builder = StatisticsQuery.builder().type(type);
         try {
             if (type == StatisticsType.BETWEEN) {
-                builder.startDate(LocalDate.parse(request.getParameter("start")))
-                        .endDate(LocalDate.parse(request.getParameter("end")));
+                builder.start(LocalDate.parse(request.getParameter("start")))
+                        .end(LocalDate.parse(request.getParameter("end")));
             }
             return builder.build();
-        } catch (DateTimeParseException e) {
-            throw e;
+        } catch (DateTimeParseException | NullPointerException e) {
+            throw new QueryParameterException("Not Allowed Query Parameter",e);
         }
 
     }
