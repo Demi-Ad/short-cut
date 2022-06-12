@@ -9,6 +9,7 @@ import com.shortcutweb.repository.RedirectUrlRepository;
 import com.shortcutweb.res.UrlStatisticsData;
 import com.shortcutweb.res.UrlStatisticsResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.net.URI;
@@ -23,6 +24,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UrlStatisticsService {
     private final RedirectInformationRepository informationRepository;
     private final RedirectUrlRepository urlRepository;
@@ -38,12 +40,12 @@ public class UrlStatisticsService {
             case BETWEEN:
                 startDate = query.getStart();
                 endDate = query.getEnd();
-                list.addAll(informationRepository.searchByConvertUrl(redirectUrl,startDate,endDate));
+                list.addAll(informationRepository.searchByConvertUrl(redirectUrl.getId(),startDate,endDate));
                 break;
             case CURRENT:
                 startDate = LocalDate.now().minusMonths(1L);
                 endDate = LocalDate.now();
-                list.addAll(informationRepository.searchByConvertUrl(redirectUrl,startDate ,endDate));
+                list.addAll(informationRepository.searchByConvertUrl(redirectUrl.getId(),startDate ,endDate));
                 break;
             default:
                 throw new RuntimeException();
@@ -84,9 +86,15 @@ public class UrlStatisticsService {
 
     private String mappingHost(RedirectInformation redirectInformation) {
         try {
-            return new URI(redirectInformation.getReferer()).getHost();
-        } catch (URISyntaxException e) {
-            return null;
+            log.info(redirectInformation.getReferer());
+            String host = new URI(redirectInformation.getReferer()).getHost();
+            if (host != null) {
+                return host;
+            } else {
+                return redirectInformation.getReferer();
+            }
+        } catch (URISyntaxException | NullPointerException e) {
+            return redirectInformation.getReferer();
         }
     }
 }

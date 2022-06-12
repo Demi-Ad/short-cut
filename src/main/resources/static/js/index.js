@@ -1,13 +1,14 @@
 function copyBtn(url) {
-    navigator.clipboard.writeText(url)
-    toastr.info("ClipBoard Copy It!")
+    navigator.clipboard.writeText(url).then(() => {
+        toastr.info("ClipBoard Copy It!")
+    })
 }
 
 function cardHtmlCreate(json) {
-    const {convertUrl, documentTitle, originUrl, createDate} = json
-    return `<div class="col-12 mb-3 border-start border-primary border-2">
+    const {convertUrl, documentTitle, originUrl} = json
+    return `<div class="col-12 mb-3">
                                 <div class="card">
-                                      <div class="card-body">
+                                      <div class="card-body border-start border-primary border-2">
                                             <div class="d-flex">
                                                 <p class="text-truncate mb-0 fs-5">
                                                     <a class="text-decoration-none align-middle" href="${originUrl}">${documentTitle}</a>

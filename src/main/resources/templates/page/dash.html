@@ -6,7 +6,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-	<title>AdminKit Demo - Bootstrap 5 Admin Template</title>
+	<title>Shortest - Analysis</title>
 
 	<link href="../../static/css/app.css" th:href="@{/css/app.css}" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/gridjs/5.0.2/theme/mermaid.min.css" integrity="sha512-QT3siPsD/eTF0b7f9Vq2eHf456XGoqXaiwmqpuIoYwRKnLgpnyntOlebCf/6WtXoXRZV7LupbEdvbgV2Lh0zmA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -34,7 +34,7 @@
 			<main class="content">
 				<div class="container-fluid p-0">
 
-					<h1 class="h3 mb-3"><strong>Analytics</strong> Dashboard</h1>
+					<h1 class="h3 mb-3"><strong>Analysis</strong> Dashboard</h1>
 
 					<div class="row">
 						<div class="col-xl-6 col-xxl-5">
@@ -213,23 +213,23 @@
 		Chart.register(autocolors);
 
 		function makeChart(data,ctx,type) {
-			const {key, value} = data // {key:[], value:[]}
+			const {key, value} = data
 
 			const chartSetting = {
-				type: type, // 차트의 형태
-				data: { // 차트에 들어갈 데이터
+				type: type,
+				data: {
 					labels: [
 						//x 축
 						...key.reverse()
 					],
 					datasets: [
-						{ //데이터
-							label: 'count', //차트 제목
-							fill: false, // line 형태일 때, 선 안쪽을 채우는지 안채우는지
+						{
+							label: 'count',
+							fill: false,
 							data: [
-								...value.reverse() //x축 label에 대응되는 데이터 값
+								...value.reverse()
 							],
-							borderWidth: 1 //경계선 굵기
+							borderWidth: 1
 						}
 					]
 				},

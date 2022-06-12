@@ -12,8 +12,8 @@ import java.util.List;
 
 public interface RedirectInformationRepository extends JpaRepository<RedirectInformation, Long> {
 
-    @Query("select r from RedirectInformation r where r.redirectUrl = :redirectUrl and r.redirectDate between :startDate and :endDate order by r.redirectDate asc")
-    List<RedirectInformation> searchByConvertUrl(@Param("redirectUrl") RedirectUrl convertUrl,
+    @Query("select r from RedirectInformation r where r.redirectUrl.id = :redirectId and r.redirectDate between :startDate and :endDate order by r.redirectDate asc")
+    List<RedirectInformation> searchByConvertUrl(@Param("redirectId") Long id,
                                                  @Param("startDate") LocalDate redirectDateStart,
                                                  @Param("endDate") LocalDate redirectDateEnd);
 

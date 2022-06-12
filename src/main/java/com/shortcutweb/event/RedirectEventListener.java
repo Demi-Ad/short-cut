@@ -31,7 +31,7 @@ public class RedirectEventListener {
         try {
             country = geoLiteComponent.country(event.getClientIP());
         } catch (IOException | GeoIp2Exception e) {
-            country = "Not Found";
+            country = "UNKNOWN";
         }
 
         RedirectInformation redirectInformation = RedirectInformation.builder()
