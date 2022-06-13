@@ -2,7 +2,7 @@ spring:
     jpa:
         hibernate:
             ddl-auto: none
-        show-sql: true
+        show-sql: false
         open-in-view: off
         properties:
             hibernate:
@@ -46,3 +46,13 @@ spring:
     config:
         activate:
             on-profile: mysql
+---
+spring:
+    datasource:
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        url: jdbc:mysql://mysqlDB:3306/shortcut
+        username: root
+        password: password
+    config:
+        activate:
+            on-profile: docker
