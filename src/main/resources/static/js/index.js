@@ -1,4 +1,5 @@
 function copyBtn(url) {
+    // TODO : polyfill Mobile
     navigator.clipboard.writeText(url).then(() => {
         toastr.info("ClipBoard Copy It!")
     })
@@ -48,9 +49,10 @@ window.addEventListener("load", function () {
     if (!localStorage.getItem("site")) {
         localStorage.setItem("site",JSON.stringify([]))
     }
+
     resultDraw()
 
-    document.querySelector("#short-btn").addEventListener("click",() => {
+    document.querySelector("#short-btn").addEventListener("click",e => {
         let urlElem = document.querySelector("#url-input");
         let originUrl = urlElem.value
         const urlRegex = /(http|https):\/\/(\w+:?\w*@)?(\S+)(:\d+)?(\/|\/([\w#!:.?+=&%@\-\/]))?/
@@ -60,6 +62,7 @@ window.addEventListener("load", function () {
             return
         }
         $("#spinner").toggle()
+        $("#short-btn").attr("disabled", true);
         fetch("/convert",{
             method: "POST",
             headers: {
@@ -87,9 +90,12 @@ window.addEventListener("load", function () {
             toastr.success("success! convert complete")
             resultDraw()
             $("#spinner").toggle()
+            $("#short-btn").attr("disabled", false);
         }).catch(err => {
             $("#spinner").toggle()
+            $("#short-btn").attr("disabled", false);
             toastr.error(err)
+
         })
     })
 })

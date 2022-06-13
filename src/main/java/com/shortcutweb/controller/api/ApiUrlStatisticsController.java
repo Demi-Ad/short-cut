@@ -32,8 +32,8 @@ public class ApiUrlStatisticsController {
             description = "type(current | between), startDate(type:between!), endDate(type:between!)",
             responses = {
             @ApiResponse(responseCode = "200",content = @Content(mediaType = "application/json",schema = @Schema(implementation = UrlStatisticsResponse.class))),
-            @ApiResponse(responseCode = "400",description = "URL NOT FOUND"),
-            @ApiResponse(responseCode = "404",content = @Content(schema = @Schema(implementation = ApiFailResponse.class)), description = "Query Parameter Not Accepted")
+            @ApiResponse(responseCode = "404",description = "URL NOT FOUND",content = @Content(schema = @Schema(implementation = Void.class))),
+            @ApiResponse(responseCode = "400",content = @Content(schema = @Schema(implementation = ApiFailResponse.class)), description = "Query Parameter Not Accepted")
     })
     @GetMapping(value = "/{param:^[a-zA-Z0-9]{6}-stat$}",produces = "application/json")
     public ResponseEntity<UrlStatisticsResponse> getUrlStatistics(@PathVariable String param,

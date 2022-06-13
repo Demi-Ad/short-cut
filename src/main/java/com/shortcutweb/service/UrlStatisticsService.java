@@ -86,7 +86,6 @@ public class UrlStatisticsService {
 
     private String mappingHost(RedirectInformation redirectInformation) {
         try {
-            log.info(redirectInformation.getReferer());
             String host = new URI(redirectInformation.getReferer()).getHost();
             if (host != null) {
                 return host;

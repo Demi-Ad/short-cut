@@ -7,6 +7,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
+import org.springframework.util.MimeTypeUtils;
 import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
@@ -31,16 +32,20 @@ public class UrlConnectionCheckService {
 
     public String connect(String url) {
         try {
-
-
             ResponseEntity<String> res = restTemplate.exchange(url, HttpMethod.GET , defaultRequestEntity,String.class);
-            if (res.getStatusCode().is2xxSuccessful() && res.getBody() != null) {
-                Document document = Jsoup.parse(res.getBody());
-                return document.title();
+            if (res.getStatusCode().is2xxSuccessful()) {
+                if (res.getHeaders().getContentType().includes(MimeTypeUtils.TEXT_HTML)) {
+                    Document document = Jsoup.parse(res.getBody());
+                    return document.title();
+                } else {
+                    throw new UrlConvertException("This URL Is Not text/html");
+                }
             }
             throw new UrlConvertException("URL StatusCode Not Successfully");
         } catch (RestClientException e) {
             throw new UrlConvertException("RestTemplate Exception",e);
+        } catch (NullPointerException e) {
+            throw new UrlConvertException("URL Parsing Error");
         }
     }
 }
